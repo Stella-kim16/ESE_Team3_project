@@ -31,6 +31,16 @@
 ---
 
 ## 5. State Machine
+
+```mermaid
+stateDiagram-v2
+    STANDALONE --> COUPLING: JOIN_REQ
+    COUPLING --> DE_COUPLING: DECOUPLE_REQ
+    COUPLING --> SYNCHRONIZED_PLATOONING
+    DE_COUPLING --> SYNCHRONIZED_PLATOONING: Re-Coupling Complete
+    SYNCHRONIZED_PLATOONING --> STANDALONE: EMERGENCY_BRAKE
+```
+
 * **STANDALONE**: The truck operates independently until platoon formation is initiated via `evt_request_coupling`.
 * **COUPLING**: The trailing truck processes the join request and synchronizes speed and position. The state transitions to platooning when `evt_coupling_accept` is received.
 * **PLATOONING**: The core operational state where telemetry and control signals are continuously exchanged.
